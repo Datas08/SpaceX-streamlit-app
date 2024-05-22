@@ -37,14 +37,13 @@ features_list = []
 
 
 def get_features():
-    flight_number = st.number_input('Enter a flight number', min_value=0, max_value=250, value=None)
-    payload_mass = st.number_input('Enter Payload mass value(kg)', min_value=0, max_value=25000, value=None)
-    flights = st.number_input('Enter number of flights', min_value=0, max_value=50, value=None)
+    flight_number = st.slider('Flight number', min_value=0, max_value=250, value=None)
+    payload_mass = st.slider('Payload mass value(kg)', min_value=0, max_value=25000, value=None)
+    flights = st.slider('Enter number of flights', min_value=0, max_value=50, value=None)
     grid_fins = st.selectbox('GridFins yes/no?(yes=1,no=0)', (0, 1), placeholder='Select a value')
     reused = st.selectbox('Was the first stage reused yes/no?(yes=1,no=0)', (0, 1), placeholder='Select a value')
     legs = st.selectbox('Legs yes/no?(yes=1,no=0)', (0, 1), placeholder='Select a value')
-    blocks = st.number_input('Enter number of blocks', min_value=0, max_value=20, value=None)
-
+    blocks = st.slider('Enter number of blocks', min_value=0, max_value=20, value=None)
     features_list.extend((flight_number, payload_mass, flights, grid_fins, reused, legs, blocks))
     return features_list
 
