@@ -11,16 +11,21 @@ df_1 = pd.read_csv(r'dataset_part_3.csv')
 columns = ['FlightNumber', 'PayloadMass', 'Flights', 'GridFins', 'Reused', 'Legs', 'Block']
 X = pd.DataFrame(df_1, columns=columns)
 
-Y = df['Class'].to_numpy()
-scaler = preprocessing.StandardScaler()
-scale = scaler.fit(X)
-X = scale.transform(X)
+Y = df['Class']
 
 X_train, X_test, y_train, y_test = train_test_split(X, Y, random_state=2, test_size=0.2)
+scaler = preprocessing.StandardScaler()
+scale = scaler.fit(X_train)
+X_train_scaled = scale.transform(X_train)
+X_test_scaled = scale.transform(X_test)
+
+# converting the numpy array into dataframe
+X_train_scaled = pd.DataFrame(X_train_scaled, columns=X_train.columns)
+X_test_scaled = pd.DataFrame(X_test_scaled, columns=X_test.columns)
+
 tree = DecisionTreeClassifier(criterion='gini', max_depth=18, max_features='log2',
                               min_samples_leaf=2, min_samples_split=2, splitter='random')
-tree.fit(X_train, y_train)
-
+tree.fit(X_train_scaled, y_train)
 st.title('SpaceX falcon9 landing outcome prediction using DecisionTreeClassifer')
 
 features_df, original_df = st.tabs(['Features Dataframe', 'Original Dataframe with target'])
