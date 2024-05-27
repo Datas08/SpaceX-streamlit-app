@@ -8,6 +8,7 @@ import streamlit as st
 
 df = pd.read_csv(r'dataset_part_2.csv')
 X = pd.read_csv(r'dataset_part_3.csv')
+X = X.drop('FlightNumber', axis = 1)
 
 Y = df['Class']
 X_train, X_test, y_train, y_test = train_test_split(X, Y, random_state=2, test_size=0.2)
@@ -35,7 +36,7 @@ with original_df:
     st.subheader('Dataframe with target variable class')
     st.write(df)
 
-flight_no = st.slider('Flight number', min_value=0, max_value=250, value=None)
+st.subheader('Select Features for prediction')
 payload_mass = st.slider('Payload mass value(kg)', min_value=0, max_value=25000, value=None)
 orbit_name = st.selectbox('Orbit',
                           ('LEO', 'ISS', 'PO', 'GTO', 'ES-L1', 'SSO', 'HEO', 'MEO', 'VLEO', 'SO', 'GEO', 'TLI'))
@@ -60,7 +61,7 @@ blocks = st.slider('Enter number of blocks', min_value=0, max_value=20, value=No
 reused_counts = st.slider('Reused Count', min_value=0, max_value=15, value=None)
 
 
-def get_values(flight_number, payloadmass, orbitname, site, serial_no, pad, flights, gridfins, reused, legs,
+def get_values(payloadmass, orbitname, site, serial_no, pad, flights, gridfins, reused, legs,
                     block, reused_count):
     loc_orbit = np.where(X.columns == f'Orbit_{orbitname}')[0][0]
     loc_site = np.where(X.columns == f'LaunchSite_{site}')[0][0]
@@ -83,9 +84,10 @@ def get_values(flight_number, payloadmass, orbitname, site, serial_no, pad, flig
 
     return x
 
-values = get_values(flight_no, payload_mass, orbit_name, site_name, serial, pad_name, flights_count,
+values = get_values(payload_mass, orbit_name, site_name, serial, pad_name, flights_count,
                                 grid_fins, reused_val, legs_no, blocks, reused_counts)
 values_scaled = scale.transform([values])
+st.subheader('Scaled Values')
 st.write(values_scaled)
 
 
