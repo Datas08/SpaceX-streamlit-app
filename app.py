@@ -24,7 +24,7 @@ X_test_scaled = pd.DataFrame(X_test_scaled, columns=X_test.columns)
 svm = SVC(C=1.0, gamma=0.03162277660168379, kernel='sigmoid')
 svm.fit(X_train_scaled, y_train)
 
-st.title('SpaceX falcon9 landing outcome prediction using DecisionTreeClassifer')
+st.title('SpaceX falcon9 landing outcome prediction using Support Vector Machine')
 
 features_df, original_df = st.tabs(['Features Dataframe', 'Original Dataframe with target'])
 with features_df:
