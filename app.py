@@ -69,20 +69,17 @@ def get_values(payloadmass, orbitname, site, serial_no, pad, flights, gridfins, 
     loc_pad = np.where(X.columns == f'LandingPad_{pad}')[0][0]
 
     x = np.zeros(len(X.columns))
-    x[0] = flight_number
-    x[1] = payloadmass
-    x[2] = flights
-    x[3] = gridfins
-    x[4] = reused
-    x[5] = legs
-    x[6] = block
-    x[7] = reused_count
+    x[0] = payloadmass
+    x[1] = flights
+    x[2] = gridfins
+    x[3] = reused
+    x[4] = legs
+    x[5] = block
+    x[6] = reused_count
     x[loc_orbit] = 1
     x[loc_site] = 1
     x[loc_serial] = 1
     x[loc_pad] = 1
-
-    return x
 
 values = get_values(payload_mass, orbit_name, site_name, serial, pad_name, flights_count,
                                 grid_fins, reused_val, legs_no, blocks, reused_counts)
