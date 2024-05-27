@@ -81,7 +81,12 @@ def predict_landing(flight_number, payloadmass, orbitname, site, serial_no, pad,
     x[loc_serial] = 1
     x[loc_pad] = 1
 
-    return svm.predict([x])[0]
+    return x
+
+values = get_values(flight_no, payload_mass, orbit_name, site_name, serial, pad_name, flights_count,
+                                grid_fins, reused_val, legs_no, blocks, reused_counts)
+values_scaled = scale.transform([values])
+st.write(values_scaled)
 
 
 if 'clicked' not in st.session_state:
@@ -90,8 +95,7 @@ if 'clicked' not in st.session_state:
 
 def click_button():
     st.session_state.clicked = True
-    predicted = predict_landing(flight_no, payload_mass, orbit_name, site_name, serial, pad_name, flights_count,
-                                grid_fins, reused_val, legs_no, blocks, reused_counts)
+    predicted = svm.predict(values_scaled)
     return predicted
 
 
