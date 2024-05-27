@@ -60,7 +60,7 @@ blocks = st.slider('Enter number of blocks', min_value=0, max_value=20, value=No
 reused_counts = st.slider('Reused Count', min_value=0, max_value=15, value=None)
 
 
-def predict_landing(flight_number, payloadmass, orbitname, site, serial_no, pad, flights, gridfins, reused, legs,
+def get_values(flight_number, payloadmass, orbitname, site, serial_no, pad, flights, gridfins, reused, legs,
                     block, reused_count):
     loc_orbit = np.where(X.columns == f'Orbit_{orbitname}')[0][0]
     loc_site = np.where(X.columns == f'LaunchSite_{site}')[0][0]
