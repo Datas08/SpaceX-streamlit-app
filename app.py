@@ -1,14 +1,14 @@
 import sklearn
+from sklearn.svm import SVC
 import pandas as pd
 import numpy as np
-from sklearn.model_selection import train_test_split
 from sklearn import preprocessing
-from sklearn.svm import SVC
+from sklearn.model_selection import train_test_split
 import streamlit as st
 
 df = pd.read_csv(r'dataset_part_2.csv')
 X = pd.read_csv(r'dataset_part_3.csv')
-X = X.drop('FlightNumber', axis = 1)
+X = X.drop('FlightNumber', axis=1)
 
 Y = df['Class']
 X_train, X_test, y_train, y_test = train_test_split(X, Y, random_state=2, test_size=0.2)
@@ -36,7 +36,7 @@ with original_df:
     st.subheader('Dataframe with target variable class')
     st.write(df)
 
-st.subheader('Select Features for prediction')
+st.subheader('Select Features')
 payload_mass = st.slider('Payload mass value(kg)', min_value=0, max_value=25000, value=None)
 orbit_name = st.selectbox('Orbit',
                           ('LEO', 'ISS', 'PO', 'GTO', 'ES-L1', 'SSO', 'HEO', 'MEO', 'VLEO', 'SO', 'GEO', 'TLI'))
@@ -81,9 +81,12 @@ def get_values(payloadmass, orbitname, site, serial_no, pad, flights, gridfins, 
     x[loc_serial] = 1
     x[loc_pad] = 1
 
+    return x
+
 values = get_values(payload_mass, orbit_name, site_name, serial, pad_name, flights_count,
                                 grid_fins, reused_val, legs_no, blocks, reused_counts)
 values_scaled = scale.transform([values])
+
 st.subheader('Scaled Values')
 st.write(values_scaled)
 
